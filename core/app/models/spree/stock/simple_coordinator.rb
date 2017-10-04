@@ -70,6 +70,7 @@ module Spree
         # Turn the Stock::Packages into a Shipment with rates
         packages.map do |package|
           shipment = package.shipment = package.to_shipment
+          shipment.order = order
           shipment.shipping_rates = Spree::Config.stock.estimator_class.new.shipping_rates(package)
           shipment
         end
