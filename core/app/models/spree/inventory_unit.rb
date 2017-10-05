@@ -37,7 +37,7 @@ module Spree
     scope :not_canceled, -> { where.not(state: 'canceled') }
     scope :cancelable, -> { where(state: Spree::InventoryUnit::CANCELABLE_STATES, pending: false) }
     scope :backordered_per_variant, ->(stock_item) do
-      includes(:shipment, :order)
+      includes(shipment: :order)
         .where("spree_shipments.state != 'canceled'").references(:shipment)
         .where(variant_id: stock_item.variant_id)
         .where('spree_orders.completed_at is not null')
